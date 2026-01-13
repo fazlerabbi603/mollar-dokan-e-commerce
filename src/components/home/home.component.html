@@ -1,0 +1,42 @@
+
+<!-- Hero Section -->
+<section class="relative bg-[#004d40] text-white py-20 px-4 sm:px-6 lg:px-8 text-center">
+  <div class="absolute inset-0 bg-black opacity-30"></div>
+  <div class="relative max-w-4xl mx-auto">
+    <h2 class="font-brand text-4xl md:text-5xl text-[#d4af37]">Discover Authentic Treasures</h2>
+    <p class="mt-4 text-lg md:text-xl text-green-100 max-w-2xl mx-auto">Experience the essence of tradition and quality with our curated collection of Islamic goods.</p>
+    <a href="#products" class="mt-8 inline-block bg-[#d4af37] text-[#004d40] font-bold py-3 px-8 rounded-lg shadow-lg hover:bg-yellow-600 transition-colors">
+      Shop Now
+    </a>
+  </div>
+</section>
+
+<!-- Products Section -->
+<section id="products" class="max-w-7xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+  <!-- Category Pills -->
+  <div class="flex justify-center items-center gap-2 sm:gap-4 mb-8 flex-wrap">
+    @for(category of categories; track category) {
+      <button 
+        (click)="setCategory(category)"
+        class="px-4 py-2 text-sm sm:text-base font-semibold rounded-full transition-colors duration-200"
+        [class.bg-[#004d40]]="activeCategory() === category"
+        [class.text-white]="activeCategory() === category"
+        [class.bg-gray-200]="activeCategory() !== category"
+        [class.text-gray-700]="activeCategory() !== category"
+        [class.hover:bg-gray-300]="activeCategory() !== category"
+      >
+        {{ category }}
+      </button>
+    }
+  </div>
+
+  <!-- Products Grid -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+    @for (product of filteredProducts(); track product.id) {
+      <app-product-card [product]="product" (addToCart)="onAddToCart($event)"></app-product-card>
+    }
+  </div>
+  @if (filteredProducts().length === 0) {
+    <p class="text-center text-gray-500 mt-8">No products found in this category.</p>
+  }
+</section>

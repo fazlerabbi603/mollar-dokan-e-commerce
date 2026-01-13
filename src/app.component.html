@@ -1,0 +1,51 @@
+
+<div class="min-h-screen bg-gray-50 text-gray-800 font-body antialiased">
+  <!-- Header -->
+  <header class="bg-[#004d40] shadow-lg sticky top-0 z-20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-center items-center">
+      <h1 class="font-brand text-3xl md:text-4xl text-center text-[#d4af37] tracking-wider">
+        Mollar Dokan (মোল্লার দোকান)
+      </h1>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="pb-24">
+    @switch (activeView()) {
+      @case ('home') {
+        <app-home></app-home>
+      }
+      @case ('profile') {
+        <div class="p-8 text-center">
+          <h2 class="text-2xl font-semibold">Profile Page</h2>
+          <p class="text-gray-500 mt-2">Coming Soon!</p>
+        </div>
+      }
+    }
+  </main>
+  
+  <!-- Cart Drawer -->
+  <app-cart [isOpen]="isCartOpen()" (closeCart)="closeCart()"></app-cart>
+
+
+  <!-- Bottom Navigation -->
+  <nav class="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-200 shadow-[0_-1px_10px_rgba(0,0,0,0.05)] h-16 flex justify-around items-center z-20">
+    <button (click)="changeView('home')" class="flex flex-col items-center justify-center text-gray-500 hover:text-[#004d40] transition-colors" [class.text-[#004d40]!]="activeView() === 'home'">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+      <span class="text-xs font-medium mt-1">Home</span>
+    </button>
+    <button (click)="changeView('cart')" class="relative flex flex-col items-center justify-center text-gray-500 hover:text-[#004d40] transition-colors">
+      @if (cartService.cartCount() > 0) {
+        <span class="absolute top-[-4px] right-[-8px] bg-red-500 text-white text-[10px] font-bold w-5 h-5 rounded-full flex items-center justify-center border-2 border-white">
+          {{ cartService.cartCount() }}
+        </span>
+      }
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+      <span class="text-xs font-medium mt-1">Cart</span>
+    </button>
+    <button (click)="changeView('profile')" class="flex flex-col items-center justify-center text-gray-500 hover:text-[#004d40] transition-colors" [class.text-[#004d40]!]="activeView() === 'profile'">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      <span class="text-xs font-medium mt-1">Profile</span>
+    </button>
+  </nav>
+</div>
